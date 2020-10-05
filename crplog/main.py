@@ -1,9 +1,10 @@
-from tkinter import filedialog, simpledialog, Listbox
 from tkinter import *
+from tkinter import messagebox
+
+from aihelper import Browse, Popup, OkButton
+
 from crplog import PersonalLogFiles
 from crplog import initial
-from aihelper import Browse, Popup, OkButton
-from tkinter import messagebox
 
 
 def looper():
