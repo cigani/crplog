@@ -164,4 +164,3 @@ cython_debug/
 .venv/
 crplog.egg-info/
 crplog/__pycache__/
-crplog/initial.py

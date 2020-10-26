@@ -26,6 +26,11 @@ def on_closing(parent):
         parent.destroy()
 
 
+def error(original, ins_text):
+    original.insert(0, ins_text)
+    return "\n".join(original)
+
+
 def close(file_path, root):
     try:
         file_path = file_path.get()
@@ -33,18 +38,19 @@ def close(file_path, root):
         data.extract_data()
         data.save()
         permission = data.permission
+        badlogs = data.badlogs
         if permission:
-            permission.insert(
-                0,
-                "The following user log files are open. The data will not reflect their logs",
-            )
-            unable_to_fetch = "\n".join(permission)
+            unable_to_fetch = error(permission,
+                                    "The following user log files are open. The data will not reflect their logs")
             Popup(text=unable_to_fetch, parent=root)
-        else:
-            Popup(text="All done", parent=root)
+        if badlogs:
+            bad_log_files = error(badlogs,
+                                  "The following users have bad log data. An attempt was made to repair it in the compiled file", )
+            Popup(text=bad_log_files, parent=root)
+        Popup(text="All done", parent=root)
     except Exception as e:
         Popup(
-            text=f"Something I failed to account for came up. Good luck {e}",
+            text=f"Something I failed to account for came up. The Following:  {e}",
             parent=root,
         )
 
